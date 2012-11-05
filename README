@@ -1,0 +1,7 @@
+Exercícios relacionados ao curso avançado de Hibernate/JPA da Caelum
+
+http://www.caelum.com.br/curso/fj-25-persistencia-jpa2-hibernate/
+
+Estes exercícios foram detalhados em aula para o entendimento da evolução até a Criteria API e como podemos usá-la
+
+Foi criada uma classe para inserir dados de teste e também foram criados alguns testes simples(com JUnit) para a simplificação dos testes.
