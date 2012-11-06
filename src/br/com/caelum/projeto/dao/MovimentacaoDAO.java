@@ -118,6 +118,21 @@ public class MovimentacaoDAO {
 		return query.getSingleResult();
 	}
 	
+	public BigDecimal somaPorTipo_com_jpql(TipoMovimentacao tipo) {
+		StringBuilder jpql = new StringBuilder("select sum(m.valor) from Movimentacao m");
+		
+		if(tipo != null) {
+			jpql.append(" where m.tipoMovimentacao = :tipo");
+		}
+		
+		TypedQuery<BigDecimal> query = entityManager.createQuery(jpql.toString(), BigDecimal.class);
+		if (tipo != null) {
+			query.setParameter("tipo", tipo);
+		}
+		
+		return query.getSingleResult();
+	}
+	
 	@SuppressWarnings("unchecked")
 	public List<Object[]> buscaValorTotalPorMesEPorTipo(TipoMovimentacao tipo) {
 		Query query = entityManager.createQuery(

@@ -71,6 +71,15 @@ public class MovimentacaoDAOTeste {
 	}
 	
 	@Test
+	public void deveriaRetornarASomaDasMovimentacoesDeEntrada() throws Exception {
+		MovimentacaoDAO movimentacaoDAO = new MovimentacaoDAO(entityManager);
+		
+		BigDecimal valorTotal = movimentacaoDAO.somaPorTipo_com_jpql(TipoMovimentacao.ENTRADA);
+		
+		assertEquals(new BigDecimal("17400.00"), valorTotal);
+	}
+	
+	@Test
 	public void deveriaRetornarAsMovimentacoesDadaUmaContaEUmTipo() throws Exception {
 		MovimentacaoDAO movimentacaoDAO = new MovimentacaoDAO(entityManager);
 		
