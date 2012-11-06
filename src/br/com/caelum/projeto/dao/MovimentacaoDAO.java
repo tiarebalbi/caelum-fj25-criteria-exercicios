@@ -7,6 +7,8 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
 
 import br.com.caelum.projeto.modelo.Conta;
 import br.com.caelum.projeto.modelo.Movimentacao;
@@ -28,7 +30,7 @@ public class MovimentacaoDAO {
 		this.dao.adiciona(movimentacao);
 	}
 
-	public List<Movimentacao> lista() {
+	public List<Movimentacao> lista_com_jpql() {
 		return this.dao.lista();
 	}
 
@@ -36,6 +38,16 @@ public class MovimentacaoDAO {
 		this.dao.remove(movimentacao);
 	}
 
+	public List<Movimentacao> lista_com_criteria() {
+		CriteriaBuilder builder = entityManager.getCriteriaBuilder();
+		CriteriaQuery<Movimentacao> cq = builder.createQuery(Movimentacao.class);
+		cq.from(Movimentacao.class);
+		
+		TypedQuery<Movimentacao> query = entityManager.createQuery(cq);
+		
+		return query.getResultList();
+	}
+	
 	public List<Movimentacao> buscaPorConta(Conta conta) {
 		TypedQuery<Movimentacao> query = entityManager.createQuery("select m from Movimentacao m where m.conta = :conta", Movimentacao.class);
 		query.setParameter("conta", conta);
@@ -202,5 +214,6 @@ public class MovimentacaoDAO {
 		
 		return query.getResultList();
 	}
+
 
 }

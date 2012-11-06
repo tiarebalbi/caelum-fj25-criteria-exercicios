@@ -127,7 +127,7 @@ public class PopulaBancoParaTestes {
 		entityManager.getTransaction().commit();
 		
 		List<Conta> contas = contaDAO.lista();
-		List<Movimentacao> movimentacoes = movimentacaoDAO.lista();
+		List<Movimentacao> movimentacoes = movimentacaoDAO.lista_com_jpql();
 		
 		assertEquals(3, contas.size());
 		assertEquals(8, movimentacoes.size());
@@ -150,7 +150,7 @@ public class PopulaBancoParaTestes {
 
 	private void removeMovimentacoes() {
 		MovimentacaoDAO movimentacaoDAO = new MovimentacaoDAO(entityManager);
-		List<Movimentacao> lista = movimentacaoDAO.lista();
+		List<Movimentacao> lista = movimentacaoDAO.lista_com_jpql();
 		for (Movimentacao movimentacao : lista) {
 			movimentacaoDAO.remove(movimentacao);
 		}

@@ -1,5 +1,6 @@
 package br.com.caelum.projeto.dao.teste;
 
+import static org.junit.Assert.*;
 import static org.junit.Assert.assertEquals;
 
 import java.util.List;
@@ -24,6 +25,24 @@ public class MovimentacaoDAOTeste {
 		entityManager = new JPAUtil().getEntityManager();
 	}
 
+	@Test
+	public void deveriaRetornarAsMovimentacoes_UsandoJPQL() throws Exception {
+		MovimentacaoDAO movimentacaoDAO = new MovimentacaoDAO(entityManager);
+		
+		List<Movimentacao> movimentacoes = movimentacaoDAO.lista_com_jpql();
+		
+		assertEquals(8, movimentacoes.size());
+	}
+
+	@Test
+	public void deveriaRetornarAsMovimentacoes_UsandoCriteria() throws Exception {
+		MovimentacaoDAO movimentacaoDAO = new MovimentacaoDAO(entityManager);
+		
+		List<Movimentacao> movimentacoes = movimentacaoDAO.lista_com_criteria();
+		
+		assertEquals(8, movimentacoes.size());
+	}
+	
 	@Test
 	public void deveriaRetornarAsMovimentacoesDadaUmaContaEUmTipo() throws Exception {
 		MovimentacaoDAO movimentacaoDAO = new MovimentacaoDAO(entityManager);

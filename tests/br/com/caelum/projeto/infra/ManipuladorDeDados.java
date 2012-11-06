@@ -34,7 +34,7 @@ public class ManipuladorDeDados {
 
 	private void removeMovimentacoes() {
 		MovimentacaoDAO movimentacaoDAO = new MovimentacaoDAO(entityManager);
-		List<Movimentacao> lista = movimentacaoDAO.lista();
+		List<Movimentacao> lista = movimentacaoDAO.lista_com_jpql();
 		for (Movimentacao movimentacao : lista) {
 			movimentacaoDAO.remove(movimentacao);
 		}
