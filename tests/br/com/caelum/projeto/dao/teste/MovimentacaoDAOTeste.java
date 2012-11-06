@@ -1,8 +1,8 @@
 package br.com.caelum.projeto.dao.teste;
 
-import static org.junit.Assert.*;
 import static org.junit.Assert.assertEquals;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -41,6 +41,33 @@ public class MovimentacaoDAOTeste {
 		List<Movimentacao> movimentacoes = movimentacaoDAO.lista_com_criteria();
 		
 		assertEquals(8, movimentacoes.size());
+	}
+	
+	@Test
+	public void deveriaRetornarASomaDasMovimentacoes_UsandoJPQL() throws Exception {
+		MovimentacaoDAO movimentacaoDAO = new MovimentacaoDAO(entityManager);
+		
+		BigDecimal valorTotal = movimentacaoDAO.soma_com_jpql();
+		
+		assertEquals(new BigDecimal("32900.00"), valorTotal);
+	}
+	
+	@Test
+	public void deveriaRetornarASomaDasMovimentacoes_UsandoCriteria() throws Exception {
+		MovimentacaoDAO movimentacaoDAO = new MovimentacaoDAO(entityManager);
+		
+		BigDecimal valorTotal = movimentacaoDAO.soma_com_criteria();
+		
+		assertEquals(new BigDecimal("32900.0"), valorTotal);
+	}
+	
+	@Test
+	public void deveriaRetornarASomaDasMovimentacoes_UsandoCriteria_Compacto() throws Exception {
+		MovimentacaoDAO movimentacaoDAO = new MovimentacaoDAO(entityManager);
+		
+		BigDecimal valorTotal = movimentacaoDAO.soma_com_criteria_compacto();
+		
+		assertEquals(new BigDecimal("32900.0"), valorTotal);
 	}
 	
 	@Test

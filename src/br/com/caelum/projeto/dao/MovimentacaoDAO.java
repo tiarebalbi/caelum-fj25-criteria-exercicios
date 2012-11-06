@@ -9,6 +9,9 @@ import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Expression;
+import javax.persistence.criteria.Path;
+import javax.persistence.criteria.Root;
 
 import br.com.caelum.projeto.modelo.Conta;
 import br.com.caelum.projeto.modelo.Movimentacao;
@@ -81,7 +84,40 @@ public class MovimentacaoDAO {
 		
 		return valorTotal;
 	}
+	
 
+	public BigDecimal soma_com_jpql() {
+		String jpql = "select sum(m.valor) from Movimentacao m";
+		TypedQuery<BigDecimal> query = entityManager.createQuery(jpql, BigDecimal.class);
+		
+		return query.getSingleResult();
+	}
+	
+	public BigDecimal soma_com_criteria() {
+		CriteriaBuilder builder = entityManager.getCriteriaBuilder();
+		CriteriaQuery<BigDecimal> cq = builder.createQuery(BigDecimal.class);
+		Root<Movimentacao> root = cq.from(Movimentacao.class);
+		
+		Path<BigDecimal> caminho = root.<BigDecimal>get("valor");
+		Expression<BigDecimal> soma = builder.sum(caminho);
+		cq.select(soma);
+		
+		TypedQuery<BigDecimal> query = entityManager.createQuery(cq);
+		
+		return query.getSingleResult();
+	}
+
+	public BigDecimal soma_com_criteria_compacto() {
+		CriteriaBuilder builder = entityManager.getCriteriaBuilder();
+		CriteriaQuery<BigDecimal> cq = builder.createQuery(BigDecimal.class);
+		
+		cq.select(builder.sum(cq.from(Movimentacao.class).<BigDecimal>get("valor")));
+		
+		TypedQuery<BigDecimal> query = entityManager.createQuery(cq);
+		
+		return query.getSingleResult();
+	}
+	
 	@SuppressWarnings("unchecked")
 	public List<Object[]> buscaValorTotalPorMesEPorTipo(TipoMovimentacao tipo) {
 		Query query = entityManager.createQuery(
